@@ -1,0 +1,64 @@
+<html>
+
+<head>
+    <script src="/game.js" defer></script>
+    <style>
+        * {
+            margin: 0;
+            font-family: sans-serif;
+        }
+
+        #gameover {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            opacity: 0;
+            background-color: rgba(128, 0, 0, 0);
+            transition: .5s;
+            z-index: 999;
+        }
+
+        #gameover.show {
+            opacity: 1;
+            background-color: rgba(128, 0, 0, 0.75);
+        }
+
+        #gameover h1 {
+            margin-top: 0;
+            text-align: center;
+            opacity: 1;
+            color: white;
+            font-size: 5em;
+        }
+
+        #gameover.show h1 {
+            margin-top: 20%;
+        }
+
+        #gameover p {
+            text-align: center;
+            opacity: 1;
+            font-style: oblique;
+            font-size: 1.2em;
+            color: lightgray;
+        }
+
+        #gameover #score {
+            font-size: 2em;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas></canvas>
+    <div id="GameOver">
+        <h1>Game Over</h1>
+        <p id="score">17</p>
+        <p>press any key to restart.</p>
+    </div>
+</body>
+
+</html>
