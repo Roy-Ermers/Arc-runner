@@ -19,17 +19,27 @@ var GameOver = document.getElementById("GameOver");
 function GetArcCenter(angle, dist) {
     var x = dist * Math.cos(angle * 0.0174532925);
     var y = dist * Math.sin(angle * 0.0174532925);
-    return { x, y };
+    return {
+        x,
+        y
+    };
 }
+
 function lerp(start, end, amt) {
     return (1 - amt) * start + amt * end;
 }
+
 function GenerateArc() {
-    var result = { rotation: 0, size: 0, distance: window.innerWidth };
+    var result = {
+        rotation: 0,
+        size: 0,
+        distance: window.innerWidth
+    };
     result.rotation = Math.floor(Math.random() * 9) * 45;
     result.size = Math.floor(Math.random() * 5 + 1) * 45;
     return result;
 }
+
 function Color(r, g, b) {
     this.r = r;
     this.g = g;
@@ -64,20 +74,24 @@ Number.prototype.between = function (a, b) {
 //#endregion
 function Redraw(frames) {
     GameOver.classList.toggle("show", !GameRunning);
-    if (!GameRunning) return;
+    if (!GameRunning) {
+        return;
+    }
     if (navigator.webkitGetGamepads) {
         var gp = navigator.webkitGetGamepads()[0];
-        if (gp != undefined && gp.axes[0] != 0)
+        if (gp != undefined && gp.axes[0] != 0) {
             RotationAxis = gp.axes[0];
+        }
     } else {
         var gp = navigator.getGamepads()[0];
-        if (gp != undefined && gp.axes[0] != 0)
+        if (gp != undefined && gp.axes[0] != 0) {
             RotationAxis = gp.axes[0];
+        }
     }
     if (totalArcs % 25 == 0) {
         currentColor = Color.Random();
         totalArcs++;
-        speed += 0.1;
+        speed *= 1.1;
     }
     currentColorSmoothed = Color.Lerp(currentColorSmoothed, currentColor, 0.2);
     globalRotationSmoothed = lerp(globalRotationSmoothed, globalRotation += RotationAxis * 5, 0.2);
@@ -99,7 +113,9 @@ function Redraw(frames) {
         ctx.strokeStyle = currentColorSmoothed.toString();
         ctx.stroke();
         ctx.closePath();
-        if (arc.distance <= speed) score++;
+        if (arc.distance <= speed) {
+            score++;
+        }
     }, this);
     ctx.beginPath();
     ctx.moveTo(canvas.width / 2 - 10, canvas.height / 2 - 1);
@@ -120,7 +136,9 @@ function Redraw(frames) {
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     ctx.fillText(score.toString(), canvas.width / 2, canvas.height / 2);
-    arcs = arcs.filter(function (elem) { return elem.distance > speed });
+    arcs = arcs.filter(function (elem) {
+        return elem.distance > speed
+    });
     requestAnimationFrame(Redraw);
 }
 canvas.focus();
@@ -134,8 +152,7 @@ document.addEventListener("keydown", function (evt) {
         if (evt.keyCode == 39) {
             RotationAxis = 1;
         }
-    }
-    else if (!GameRunning) {
+    } else if (!GameRunning) {
         GameRunning = true;
         arcs = [];
         totalArcs = 0;
