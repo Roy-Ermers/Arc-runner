@@ -91,7 +91,7 @@ function Redraw(frames) {
     if (totalArcs % 25 == 0) {
         currentColor = Color.Random();
         totalArcs++;
-        speed *= 1.1;
+        speed *= 1.5;
     }
     currentColorSmoothed = Color.Lerp(currentColorSmoothed, currentColor, 0.2);
     globalRotationSmoothed = lerp(globalRotationSmoothed, globalRotation += RotationAxis * 5, 0.2);
